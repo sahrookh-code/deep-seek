@@ -8,8 +8,10 @@ export async function POST(req) {
     const wh=new Webhook(process.env.SIGNING_SECRET)
     const headerspayload = await headers()
     const svixHeaders = { "svix-id": headerspayload.get("svix-id"),
-        
+        "svix-timestamp": headerspayload.get("svix-timestamp"),
+               
         "svix-signature": headerspayload.get("svix-signature"),
+
     };
 
     //get the payload verify
