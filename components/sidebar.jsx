@@ -93,7 +93,7 @@ const Sidebar = ({ expand, setExpand }) => {
             <UserButton />
           ) : (
             <>
-   2          <Image 
+            <Image 
                 src="/assets/profile_icon.svg" 
                 width={16} 
                 height={16}
