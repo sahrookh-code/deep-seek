@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import "./styles/fonts.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { AppContextProvider } from "../context/AppContext";
-
-const inter = Inter({
-  variable: "--font-inder",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Deep-Seek",
@@ -19,12 +14,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const fontClass = "font-inter";
+
   return (
     <ClerkProvider>
       <AppContextProvider>
         <html lang="en">
           <body
-            className={`${inter.className} antialiased`}
+            className={`${fontClass} antialiased`}
           >
             {children}
           </body>
