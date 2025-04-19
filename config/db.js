@@ -10,8 +10,8 @@ export default async function connectDB() {
 
     if (!cached.promise) {
         cached.promise = mongoose.connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            
+           
         }).then((mongoose) => {
             return mongoose;
         });
