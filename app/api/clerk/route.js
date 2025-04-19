@@ -1,5 +1,6 @@
 import {Webhook} from "svix";
-import connectDB from "@/config/db";
+import { connectToDB } from "@/lib/db"; // your Mongo connect file
+
 import User from "@/models/User";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
