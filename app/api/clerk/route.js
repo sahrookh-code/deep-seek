@@ -17,26 +17,35 @@ export async function POST(req) {
         const payload = await req.json();
         const body = JSON.stringify(payload);
         const {data, type} = wh.verify(body, svixHeaders);
+        console.log('Webhook event type:', type, 'for user:', data.id);
 
         await connectDB();
         const userData = {
             _id: data.id,
-            name: `${data.first_name} ${data.last_name}`,
-            email: data.email_address[0].email_address,
-            image: data.image_url,
+            name: data.first_name ? `${data.first_name} ${data.last_name || ''}`.trim() : 'Unknown',
+            email: data.email_addresses && data.email_addresses.length > 0 
+                ? data.email_addresses[0].email_address 
+                : undefined,
+            image: data.image_url || undefined,
         };
+
+        console.log('Processing user data:', userData);
 
         switch(type) {
             case 'user.created':
                 await User.create(userData);
+                console.log('User created successfully:', data.id);
                 break;
             case 'user.updated':
-                await User.findByIdAndUpdate(data.id, userData);
+                const updatedUser = await User.findByIdAndUpdate(data.id, userData, { new: true });
+                console.log('User updated successfully:', data.id);
                 break;
             case 'user.deleted':
-                await User.findByIdAndDelete(data.id);
+                const deletedUser = await User.findByIdAndDelete(data.id);
+                console.log('User deleted successfully:', data.id);
                 break;
             default:
+                console.log('Unhandled webhook event type:', type);
                 break;
         }
 
